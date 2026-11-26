@@ -1,0 +1,19 @@
+# Allowlist: ignore everything, then re-include only the public config.
+# Skills are private by default. To publish one, add its two lines below.
+*
+!.gitignore
+!README.md
+!CLAUDE.md
+!skills/
+!skills/address-pr-comments/
+!skills/address-pr-comments/**
+!skills/implement-in-session/
+!skills/implement-in-session/**
+!skills/is-done/
+!skills/is-done/**
+!skills/pull-main/
+!skills/pull-main/**
+!skills/situation-report/
+!skills/situation-report/**
+
+.DS_Store
