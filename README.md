@@ -23,3 +23,20 @@ My personal Claude Code configuration (`~/.claude`): general-purpose skills and 
 ## Org constants
 
 Skills that need org values (GitHub org, follow-up issue repo, issue key prefix) read them from `~/.claude/private/context.md`. Without that file they ask for them.
+
+## Working with this setup
+
+**Add a public skill:** create `skills/<name>/SKILL.md`, then add `!skills/<name>/` and `!skills/<name>/**` to `.gitignore`.
+
+**Add a private skill:** create `private/skills/<name>/SKILL.md`, then run `bash private/bin/link.sh` to symlink it into `skills/`.
+
+**Settings:** `settings.json` is not tracked here. Claude Code reads only the real file in `~/.claude`. The private repo keeps a copy: run `bash private/bin/snapshot-settings.sh` before you commit there.
+
+**New machine:**
+
+1. Clone this repo to `~/.claude`.
+2. Clone the private repo into `~/.claude/private`.
+3. Run `bash ~/.claude/private/bin/link.sh`.
+4. Copy `~/.claude/private/settings.json` to `~/.claude/settings.json`.
+
+Without the private repo, the public skills still work. They ask for the org values that `context.md` would give them.
