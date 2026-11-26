@@ -23,7 +23,7 @@ My personal Claude Code configuration (`~/.claude`): general-purpose skills and 
 
 ## Org constants
 
-Skills that need org values (GitHub org, follow-up issue repo, issue key prefix, and for `drive-task-to-done` the PR approver, automations and extra rules) read them from `~/.claude/private/context.md`. Without that file they ask for them.
+Skills that need org values (GitHub org, follow-up issue repo, issue key prefix, and for `drive-task-to-done` the PR approver, automations and extra rules) read them from `~/.claude/private/context.md`. Without that file, `drive-task-to-done` uses safe defaults (listed in its Context table) and passes them on to the skills it calls; the other skills, run on their own, ask for the values.
 
 ## Working with this setup
 
