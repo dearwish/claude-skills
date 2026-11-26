@@ -7,6 +7,7 @@ My personal Claude Code configuration (`~/.claude`): general-purpose skills and 
 | Skill | What it does |
 |---|---|
 | `situation-report` | Fast mid-session snapshot: goal, status, what's in flight, what's next, what waits on me. |
+| `drive-task-to-done` | Own one task end to end without check-ins: plan, implement in a separate session, drive the PR to a verified merge, file every follow-up, report every decision. |
 | `is-done` | End-of-session audit: every ask, promise and loose end, checked against live state. |
 | `address-pr-comments` | Fix, reply to and resolve every review thread on a PR, then refresh its title and description. |
 | `implement-in-session` | Start a separate session that implements an agreed change end to end, up to a reviewed PR. |
@@ -22,7 +23,7 @@ My personal Claude Code configuration (`~/.claude`): general-purpose skills and 
 
 ## Org constants
 
-Skills that need org values (GitHub org, follow-up issue repo, issue key prefix) read them from `~/.claude/private/context.md`. Without that file they ask for them.
+Skills that need org values (GitHub org, follow-up issue repo, issue key prefix, and for `drive-task-to-done` the PR approver, automations and extra rules) read them from `~/.claude/private/context.md`. Without that file they ask for them.
 
 ## Working with this setup
 

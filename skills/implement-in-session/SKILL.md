@@ -5,7 +5,7 @@ description: Start a separate Claude Code session that implements an agreed chan
 
 # Implement in a new session
 
-**Org context:** read `~/.claude/private/context.md` first. It defines `<org>` (GitHub org), `<follow-up-repo>` (where follow-up issues go) and `<KEY>` (issue-tracker key prefix), plus any extra org rules. If the file is missing, ask me for these values.
+**Org context:** read `~/.claude/private/context.md` first. It defines `<org>` (GitHub org), `<follow-up-repo>` (where follow-up issues go) and `<KEY>` (issue-tracker key prefix), plus any extra org rules. If the file is missing, use the values the calling skill passed. If none were passed, ask me for them.
 
 Use after the current session has investigated a change and the user (and any approver) has decided it. This session stays with the user; a new session does the work.
 
@@ -72,10 +72,12 @@ If the session asks an architecture question, it is blocked until you reply:
 4. If the timer fires with no answer, decide yourself. Base the decision on the decided change, the repo's CLAUDE.md and the code. Send it to the session, marked as your decision and not the owner's. Tell the user what you decided and why, so they can overrule it before the PR merges.
 
 ## Autonomous callers
-Another skill can start the session and act as the starting session, for example `/drive-to-done`. When that skill runs without questions to the user, its rules replace these steps:
+Another skill can start the session and act as the starting session, for example `/drive-task-to-done`. When that skill runs without questions to the user, its rules replace these steps:
 - § 1: it fills a gap in the brief from the approved plan and the code. It does not ask the user.
 - § 3, architecture questions: it decides at once, without the timer. It sends the decision marked as its own and names it in its progress line, so the user can overrule it before the merge.
 - § 3, denied permissions: it records them as items for the user and continues with other work.
+- Org context: it passes the context values in the brief. Use them and do not ask for them.
+- `cli.md`, `claude rm`: it runs it after the PR merges, without asking.
 Its additions to the brief (branch name, PR rules, reviewers, test limits) override this file where the two conflict.
 
 ## ASD-STE100 rules

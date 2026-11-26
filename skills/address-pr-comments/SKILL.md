@@ -8,7 +8,7 @@ argument-hint: [<pr-number>] in <repo-name> (e.g. 251 in my-api, or just "in my-
 
 # Address PR Review Comments
 
-**Org context:** read `~/.claude/private/context.md` first. It defines `<org>` (GitHub org), `<follow-up-repo>` (where follow-up issues go) and `<KEY>` (issue-tracker key prefix), plus any extra org rules. If the file is missing, ask me for these values.
+**Org context:** read `~/.claude/private/context.md` first. It defines `<org>` (GitHub org), `<follow-up-repo>` (where follow-up issues go) and `<KEY>` (issue-tracker key prefix), plus any extra org rules. If the file is missing, use the values the calling skill passed. If none were passed, ask me for them.
 
 Review and address all unresolved PR comments, then ensure the PR title and description are current.
 
