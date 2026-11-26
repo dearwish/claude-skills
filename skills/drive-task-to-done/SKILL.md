@@ -23,6 +23,7 @@ Read `~/.claude/private/context.md` first, if it exists. The values below come f
 | `<checkouts>` | root of the local checkouts | `~/work` |
 | `<approver>` | who approves a PR I authored, and how to ask them (a bot, a person, a channel) | none: the PR waits on a human approver and is never merged by this run |
 | `<automations>` | agents that may own a task, their labels, their plan headers, and their takeover label | none: every task is local |
+| `<started>` | how to show that work began: a tracker status (for example "In Progress"), a label, or a project field | none: assignment only (§ 2a) |
 | extra rules | release rules, protected repos, reviewers never to request, merge rules | none |
 
 Resolve these values once, in § 1, and pass them on: sub-skills must not ask for them.
@@ -58,7 +59,14 @@ Decide once, then check again on every state change. Log the choice and the reas
 - **Local** in every other case: no automation owns it, the automation is **stuck** (§ 4), or a follow-up is small enough that it is faster to do here.
 - **A new task with no activity yet**, when `<automations>` is set: wait one poll window (§ 4) for an automation to pick it up before routing it local, so that two workers don't build the same thing.
 
-**Taking over from an automation:** add its takeover label, if `<automations>` names one, to the task and to its PR. Post one comment that says the local session took over and why. That label is the only label this skill adds to an automation's task. Never remove an automation's gate labels, and never edit its state comments.
+**Taking over from an automation:** add its takeover label, if `<automations>` names one, to the task and to its PR. Post one comment that says the local session took over and why. While an automation still owns a task, that takeover label is the only label this skill adds to it. Never remove an automation's gate labels, and never edit its state comments.
+
+### 2a. Mark the task started
+
+Once the task is routed, and again after a takeover, show that work has begun. Do it before any waiting or building, and log it in the decision log. Each step changes nothing when it is already done, so a re-run is safe.
+
+- **Assignee:** if the task is **unassigned** and routed local, or after a takeover, assign it to me (`gh issue edit <N> -R <owner>/<repo> --add-assignee @me`, or the tracker's own assign call for a tracker ticket). Read the assignee back to confirm it, because some tracker APIs accept a malformed value without an error and ignore it. Never reassign a task that belongs to another person or to an automation.
+- **Status** (only when `<started>` is set): move the task to it only from the tracker's not-started state (for example "To Do"). Never move it out of any other state here. A tracker transition is chosen by the status it leads **to**, not by its label: list the transitions and pick the one whose target is `<started>`, then read the status back. A task an automation owns keeps the automation's status flow: skip it unless you took over.
 
 ## 3. Detect state and dispatch
 
